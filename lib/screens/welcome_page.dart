@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:i_am_poetry/constants.dart';
+import 'package:i_am_poetry/screens/login_page.dart';
+import 'package:i_am_poetry/screens/signup_page.dart';
 
 class WelcomePage extends StatefulWidget {
   @override
@@ -27,7 +29,11 @@ class _WelcomePageState extends State<WelcomePage> {
                       minWidth: double.infinity,
                       height: 60,
                       onPressed: () {
-                        Navigator.pushNamed(context, '/first');
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    const LoginPage()));
                       },
                       shape: RoundedRectangleBorder(
                           side: BorderSide(color: kMainColor),
@@ -45,7 +51,11 @@ class _WelcomePageState extends State<WelcomePage> {
                       minWidth: double.infinity,
                       height: 60,
                       onPressed: () {
-                        Navigator.pushNamed(context, '/second');
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    const SignUp()));
                       },
                       color: kMainColor,
                       shape: RoundedRectangleBorder(

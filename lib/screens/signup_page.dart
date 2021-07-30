@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:i_am_poetry/widgets/inputBox.dart';
+import 'package:i_am_poetry/services/auth.dart';
 import 'package:i_am_poetry/constants.dart';
 import 'package:i_am_poetry/screens/home_screen.dart';
 
@@ -13,6 +13,7 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
   String name = '';
   TextEditingController controller = new TextEditingController();
+  AuthService _auth = AuthService();
 
   void click() {
     this.name = controller.text;
@@ -22,6 +23,8 @@ class _SignUpState extends State<SignUp> {
 
   @override
   Widget build(BuildContext context) {
+    late String email;
+    late String password;
     return Scaffold(
       resizeToAvoidBottomInset: true,
       backgroundColor: Colors.white,
@@ -62,28 +65,28 @@ class _SignUpState extends State<SignUp> {
             ),
             Column(
               children: <Widget>[
-                inputFile(label: "Username"),
-                inputFile(label: "Email"),
-                inputFile(label: "Password", obscureText: true),
-                inputFile(label: "Confirm Password ", obscureText: true),
                 TextField(
-                  controller: this.controller,
-                  decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.person_outline_rounded),
-                    labelText: "Type Your Name:",
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        width: 5,
-                        color: Colors.black,
-                      ),
-                    ),
-                    suffixIcon: IconButton(
-                      icon: Icon(Icons.done),
-                      splashColor: kMainColor,
-                      tooltip: "Submit",
-                      onPressed: this.click,
-                    ),
-                  ),
+                  keyboardType: TextInputType.emailAddress,
+                  textAlign: TextAlign.center,
+                  onChanged: (value) {
+                    email = value;
+                  },
+                  decoration: mTextFieldDecoration.copyWith(
+                      hintText: 'Enter your email',
+                      prefixIcon: Icon(Icons.email)),
+                ),
+                SizedBox(
+                  height: 20.0,
+                ),
+                TextField(
+                  obscureText: true,
+                  textAlign: TextAlign.center,
+                  onChanged: (value) {
+                    password = value;
+                  },
+                  decoration: mTextFieldDecoration.copyWith(
+                      hintText: 'Enter your password',
+                      prefixIcon: Icon(Icons.lock)),
                 ),
               ],
             ),
@@ -92,8 +95,15 @@ class _SignUpState extends State<SignUp> {
               child: MaterialButton(
                 minWidth: double.infinity,
                 height: 60,
-                onPressed: () {
-                  Navigator.pushNamed(context, '/third');
+                onPressed: () async {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (BuildContext context) =>
+                              HomeScreen(email)));
+
+                  var result =
+                      await _auth.registerFirebaseUser(email, password);
                 },
                 color: kMainColor,
                 elevation: 0,

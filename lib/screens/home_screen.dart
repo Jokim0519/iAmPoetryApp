@@ -1,5 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:i_am_poetry/constants.dart';
+import 'package:i_am_poetry/screens/message_page.dart';
+import 'package:i_am_poetry/screens/personal_account.dart';
 import 'package:i_am_poetry/widgets/post.dart';
 import 'package:i_am_poetry/widgets/postList.dart';
 import 'package:i_am_poetry/widgets/textinputWidget.dart';
@@ -14,11 +18,11 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<Post> posts = [];
+  List<Post> postsList = [];
 
   void newPost(String text) {
     this.setState(() {
-      posts.add(new Post(text, widget.name));
+      postsList.add(new Post(text, widget.name));
     });
   }
 
@@ -33,7 +37,10 @@ class _HomeScreenState extends State<HomeScreen> {
             bottom: 5,
           ),
           onPressed: () {
-            Navigator.pushNamed(context, '/fourth');
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (BuildContext context) => PersonalAccount()));
           },
           icon: Icon(
             Icons.account_circle_outlined,
@@ -52,7 +59,10 @@ class _HomeScreenState extends State<HomeScreen> {
               bottom: 5,
             ),
             onPressed: () {
-              Navigator.pushNamed(context, '/fifth');
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (BuildContext context) => MessagePage()));
             },
             icon: Icon(
               Icons.add_circle_outline_outlined,
@@ -65,8 +75,11 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: Column(
         children: <Widget>[
-          Expanded(child: PostList(this.posts)),
-          TextInputWidget(this.newPost),
+          Expanded(child: PostList(this.postsList)),
+          TextInputWidget(
+            username: '',
+            callback: this.newPost,
+          ),
         ],
       ),
     );

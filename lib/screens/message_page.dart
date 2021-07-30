@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:i_am_poetry/constants.dart';
+import 'package:getwidget/getwidget.dart';
 
 class MessagePage extends StatefulWidget {
   const MessagePage({Key? key}) : super(key: key);
@@ -9,6 +10,8 @@ class MessagePage extends StatefulWidget {
 }
 
 class _MessagePageState extends State<MessagePage> {
+  get image => null;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,23 +35,21 @@ class _MessagePageState extends State<MessagePage> {
           'iAmPoetry',
           style: TextStyle(color: kMainColor),
         ),
-        actions: [
-          IconButton(
-            padding: EdgeInsets.only(
-              right: 5,
-              bottom: 5,
-            ),
-            onPressed: () {
-              Navigator.pushNamed(context, '/fourth');
-            },
-            icon: Icon(
-              Icons.account_circle_rounded,
+        elevation: 0,
+      ),
+      body: SafeArea(
+        child: Column(children: [
+          Text(
+            'Message Page Coming Soon',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontFamily: 'Roboto',
+              fontSize: 40.0,
               color: kMainColor,
-              size: 50.0,
+              fontWeight: FontWeight.bold,
             ),
           ),
-        ],
-        elevation: 0,
+        ]),
       ),
     );
   }
